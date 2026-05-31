@@ -1,0 +1,10 @@
+{
+    "id": "fpsdisplay",
+    "name": "FPS Display",
+    "author": ["Ryan"],
+    "description": "Simple lightweight FPS counter",
+    "prefix": "fpsd",
+    "main_file": "main.lua",
+    "version": "1.0.0",
+    "priority": 0
+}
