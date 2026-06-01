@@ -1,0 +1,37 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "main.lua"
+pattern = "function love.load()"
+match_indent = true
+position = "before"
+payload = """
+local fps_enabled = true
+local default_present = love.graphics.present
+
+-- Hook directly into the frame presentation
+love.graphics.present = function(...)
+    if fps_enabled then
+        love.graphics.push("all")
+        
+        local fps = love.timer.getFPS()
+        local current_fps_text = "FPS: " .. fps
+
+        -- Shadow
+        love.graphics.setColor(0, 0, 0, 0.7)
+        love.graphics.print(current_fps_text, 11, 11)
+
+        -- Main text
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.print(current_fps_text, 10, 10)
+
+        love.graphics.pop()
+    end
+
+    return default_present(...)
+end
+"""
